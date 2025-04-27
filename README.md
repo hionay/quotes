@@ -4,15 +4,15 @@ A simple, self-hosted quotes website built with Go, HTMX, and Tailwind.
 
 ## About
 
-My friend [guney](https://github.com/gcg) started to collect quotes in 2006 during our IRC discussions on freenode (#kanal and #turklug).
+My friend [Guney](https://github.com/gcg) started collecting quotes in 2006 during our IRC discussions on Freenode (#kanal and #turklug).
 
 When he decided to shut down his quotes site, he backed up the entire database and gave it to me in 2015.
 
-I’ve been storing that database ever since, it contains valuable memories from friends nearly 20 years.
+I’ve been storing that database ever since. It contains valuable memories from friends from nearly twenty years ago.
 
 I thought it would be a shame to let it go to waste, so I decided to create a simple website to host the quotes.
 
-Of course I'm not sharing the entire database content, but I thought it would be nice to have a simple website to browse the quotes.
+Of course, I'm not sharing the entire database content, but I thought it would be nice to have a simple website to browse the quotes.
 
 ![](https://github.com/hionay/quotes/blob/main/images/quotes.jpg)
 
