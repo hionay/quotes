@@ -16,3 +16,4 @@ dist/
 completions/
 vendor/
 .idea
+.DS_Store
