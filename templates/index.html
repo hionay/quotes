@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quotes</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+  <link rel="manifest" href="/static/site.webmanifest">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+</head>
+<body class="bg-[#1e1e2e] min-h-screen flex flex-col items-center py-12 px-2">
+  <header class="w-full max-w-lg px-6 py-4 bg-[#302d41] rounded-lg shadow-md mb-8 flex justify-between items-center">
+    <h1 class="text-3xl font-extrabold">
+      <a href="/" class="text-[#f5c2e7] hover:underline">Quotes</a>
+    </h1>
+    <nav class="flex space-x-2">
+      <button
+        hx-get="/"
+        hx-target="#quote-list"
+        hx-swap="innerHTML"
+        hx-select="#quote-list"
+        class="px-3 py-1 bg-[#c6a0f6] hover:bg-[#d0bdf4] text-[#302d41] rounded-md transition"
+      >Latest</button>
+      <button
+        hx-get="/top"
+        hx-target="#quote-list"
+        hx-swap="innerHTML"
+        hx-select="#quote-list"
+        class="px-3 py-1 bg-[#fab387] hover:bg-[#ffd598] text-[#302d41] rounded-md transition"
+      >Top</button>
+      <button
+        hx-get="/random"
+        hx-target="#quote-list"
+        hx-swap="innerHTML"
+        hx-select="#quote-list"
+        class="px-3 py-1 bg-[#f5c2e7] hover:bg-[#f8dcf2] text-[#302d41] rounded-md transition"
+      >Random</button>
+    </nav>
+  </header>
+
+  <main class="w-full max-w-lg flex-1 flex flex-col items-center gap-6">
+    <aside class="w-full bg-[#302d41] rounded-lg p-6 shadow-lg">
+      <h2 class="text-xl font-semibold text-[#caa3bf] mb-4 text-center">➕ Add a Quote</h2>
+      <form hx-post="/add" hx-target="#quote-list" hx-swap="innerHTML" hx-select="#quote-list" class="space-y-4">
+        <textarea
+          name="quote"
+          required
+          rows="4"
+          class="w-full bg-[#1e1e2e] border border-[#46394d] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#c6a0f6] text-[#cdd6f4]"
+          placeholder="Your quote..."
+        ></textarea>
+        <input
+          type="text"
+          name="comment"
+          class="w-full bg-[#1e1e2e] border border-[#46394d] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#c6a0f6] text-[#cdd6f4]"
+          placeholder="Optional comment"
+        />
+        <button
+          type="submit"
+          class="w-full bg-[#caa3bf] hover:bg-[#edc0e0] text-[#1e1e2e] font-medium py-2 rounded-lg transition"
+        >Add Quote</button>
+      </form>
+    </aside>
+    <section id="quote-list" class="w-full flex flex-col gap-6">
+      {{range .Quotes}}
+        {{template "quote-card.html" .}}
+      {{end}}
+      <div class="flex justify-between items-center mt-4">
+        {{if .HasPrev}}
+          <button
+            hx-get="{{.Endpoint}}?page={{.PrevPage}}"
+            hx-target="#quote-list"
+            hx-swap="innerHTML"
+            hx-select="#quote-list"
+            class="px-3 py-1 bg-[#c6a0f6] hover:bg-[#d0bdf4] text-[#302d41] rounded-md transition"
+          >← Prev</button>
+        {{else}}
+          <span></span>
+        {{end}}
+        {{if .HasNext}}
+          <button
+            hx-get="{{.Endpoint}}?page={{.NextPage}}"
+            hx-target="#quote-list"
+            hx-swap="innerHTML"
+            hx-select="#quote-list"
+            class="px-3 py-1 bg-[#f5c2e7] hover:bg-[#f8dcf2] text-[#302d41] rounded-md transition"
+          >Next →</button>
+        {{end}}
+      </div>
+    </section>
+  </main>
+</body>
+</html>

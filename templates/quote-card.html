@@ -1,0 +1,35 @@
+{{define "quote-card.html"}}
+<article id="quote-{{.ID}}" class="w-full bg-[#302d41] rounded-lg p-6 shadow-lg mx-auto">
+  <p class="text-base leading-relaxed text-[#cdd6f4] mb-4">{{.Quote}}</p>
+  <p class="text-sm text-[#6e6a86] mb-4">{{if .Comment}}{{.Comment}}{{else}}—{{end}}</p>
+  <div class="flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <button
+        hx-post="/vote?id={{.ID}}&type=up"
+        hx-target="#quote-{{.ID}}"
+        hx-swap="outerHTML"
+        class="flex items-center space-x-1 focus:outline-none"
+        title="Like"
+      >
+        <span class="text-[#a6e3a1] text-lg">👍</span>
+      </button>
+      <button
+        hx-post="/vote?id={{.ID}}&type=down"
+        hx-target="#quote-{{.ID}}"
+        hx-swap="outerHTML"
+        class="text-[#f38ba8] text-lg focus:outline-none"
+        title="Dislike"
+      >👎</button>
+      <a
+      href="/quote/{{.ID}}"
+      class="text-[#f5c2e7] text-lg focus:outline-none"
+      title="Share this quote"
+    >🔗</a>
+      <span class="text-sm text-[#ded0f0] font-medium">Likes: {{.Likes}}</span>
+    </div>
+    <a href="/quote/{{.ID}}" class="text-[#b4a6c6] text-sm hover:underline">
+      <time datetime='{{.Date.Format "2006-01-02T15:04:05Z07:00"}}'>{{.Date.Format "Jan 2, 2006"}}</time>
+    </a>
+  </div>
+</article>
+{{end}}
