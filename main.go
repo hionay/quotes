@@ -33,13 +33,21 @@ func run(ctx context.Context) error {
 	}
 
 	a := api.NewAPI(cfg, logger, dbPool)
-	go func() {
-		<-ctx.Done()
-		logger.Info("Shutting down the server")
 
-		if err := a.Shutdown(); err != nil {
-			logger.Error("Failed to shutdown server", slog.Any("err", err))
-		}
+	serveErrCh := make(chan error, 1)
+	go func() {
+		defer close(serveErrCh)
+		serveErrCh <- a.ListenAndServe()
 	}()
-	return a.ListenAndServe()
+
+	<-ctx.Done()
+	logger.Info("Shutting down the server")
+
+	if err := a.Shutdown(); err != nil {
+		logger.Error("Failed to shutdown server", slog.Any("err", err))
+	}
+	if err := dbPool.Close(); err != nil {
+		logger.Error("Failed to close database pool", slog.Any("err", err))
+	}
+	return <-serveErrCh
 }
