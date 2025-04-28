@@ -12,7 +12,7 @@ I’ve been storing that database ever since. It contains valuable memories from
 
 I thought it would be a shame to let it go to waste, so I decided to create a simple website to host the quotes.
 
-Of course, I'm not sharing the entire database content, but I thought it would be nice to have a simple website to browse the quotes.
+Of course, I'm not sharing the entire database content here, but I thought it would be nice to have a simple website to browse the quotes.
 
 ![](https://github.com/hionay/quotes/blob/main/images/quotes.jpg)
 
@@ -41,8 +41,8 @@ Run the server:
    ```
 Visit `http://localhost:8080` in your browser.
 
-## To launch with Docker Compose:
+### To launch with Docker Compose:
 
 ```shell
-docker-compose up --build
+docker compose up --build
 ```
